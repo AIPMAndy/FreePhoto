@@ -47,6 +47,12 @@ def run():
                     # PWA claims the page then reloads; do not race against its first activation.
                     page.wait_for_function("() => 'serviceWorker' in navigator && navigator.serviceWorker.controller !== null", timeout=20000)
                     page.wait_for_load_state('load')
+                    assert page.locator('#contact').count() == 1
+                    assert page.locator('.fp-contact-website').get_attribute('href') == 'https://metaver.vip/'
+                    assert page.locator('#fp-wechat-id').inner_text() == 'AIPMAndy'
+                    page.locator('#fp-copy-wechat').click()
+                    page.wait_for_function("document.getElementById('fp-copy-status').textContent.includes('AIPMAndy')", timeout=10000)
+                    assert page.locator('#fp-copy-wechat').is_enabled(), 'Copy button did not recover'
                     page.locator('#compress').set_input_files(str(fixture))
                     link = page.locator('.image-output__item-download-button').first
                     start = time.perf_counter()
