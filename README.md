@@ -22,6 +22,16 @@
 
 FreePhoto 是 [AIPMAndy](https://github.com/AIPMAndy) 维护的独立开源项目（GPL-3.0），基于 civilblur 的 [MAZANOKE](https://github.com/civilblur/mazanoke) 二次开发，保留上游浏览器端处理引擎和第三方署名。构建时锁定 MAZANOKE commit `ceab516ade2a68f3c0abef8bd8fa03ada3ac3e7b`。
 
+## 👀 效果预览
+
+<div align="center">
+
+<a href="https://aipmandy.github.io/FreePhoto/"><img src="docs/screenshot.webp" alt="FreePhoto 在线工具首页截图" width="860"></a>
+
+<sub>点击图片打开在线版 · <a href="https://aipmandy.github.io/FreePhoto/">aipmandy.github.io/FreePhoto</a></sub>
+
+</div>
+
 ## ✨ 功能
 
 - 🗜️ **图片压缩**：调整质量或目标大小，适合分享照片、优化网站图片
