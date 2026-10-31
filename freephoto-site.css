@@ -54,3 +54,28 @@ html{scroll-behavior:smooth}#tool{scroll-margin-top:30px}
 @media(max-width:850px){.fp-features{grid-template-columns:repeat(2,minmax(0,1fr))}.fp-privacy{grid-template-columns:1fr;gap:12px}}
 @media(max-width:560px){.fp-hero{padding:60px 18px 42px}.fp-hero h2{font-size:45px}.fp-lead{font-size:15px}.fp-trust{gap:12px}.fp-hero-actions{margin-top:24px}.fp-features{grid-template-columns:1fr}.fp-features article{min-height:140px;padding:23px}.fp-features h3{margin:14px 0 8px}.fp-lower{margin-top:70px;padding:0 18px}.fp-privacy{padding:28px;margin:45px 0}.fp-faq{margin:50px 0}.fp-endnote{align-items:flex-start;flex-direction:column}.fp-trust span{font-size:11px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.fp-action-primary,.fp-action-secondary{transition:none}}
+
+
+/* Verified creator contacts: integrated unobtrusively below the FAQ. */
+.fp-contact{display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:clamp(20px,5vw,65px);padding:clamp(27px,5vw,54px);border:1px solid #d7e5d8;border-radius:28px;background:linear-gradient(125deg,#edf4ea,#f8faf4 78%);box-shadow:0 20px 58px rgba(32,78,51,.045);margin:54px 0}
+.fp-contact-copy h2{font-size:clamp(28px,3.6vw,45px);font-weight:740;letter-spacing:-.05em;line-height:1.22;margin:16px 0;color:#224732}
+.fp-contact-copy p{line-height:1.9;font-size:14px;color:#526b59;max-width:370px}
+.fp-contact-actions{display:flex;flex-direction:column;gap:13px;min-width:0}
+.fp-contact-website,.fp-contact-wechat{display:flex;gap:16px;align-items:center;justify-content:space-between;background:#fff;border:1px solid #d7e3d6;border-radius:18px;padding:20px 22px;color:#284b36}
+.fp-contact-website{text-decoration:none!important;transition:transform .18s ease,border-color .18s ease}
+.fp-contact-website:hover{transform:translateY(-2px);border-color:#88af95}
+.fp-contact-website>span:first-child,.fp-contact-wechat-text{display:flex;flex-direction:column;gap:6px;min-width:0}
+.fp-contact-actions small{font-size:10px;letter-spacing:.12em;color:#7d9985;font-weight:720}
+.fp-contact-actions strong{font-size:clamp(18px,2vw,22px);font-weight:720;letter-spacing:-.035em;overflow-wrap:anywhere}
+.fp-contact-wechat-text>span{font-size:12px;color:#76877a}
+.fp-copy-wechat{appearance:none;background:#285c42;color:#fff;border:0;border-radius:100px;padding:12px 17px;white-space:nowrap;font:inherit;font-size:12px;font-weight:680;cursor:pointer;flex-shrink:0}
+.fp-copy-wechat:disabled{opacity:.65;cursor:default}
+.fp-contact-status{font-size:12px;line-height:1.6;color:#2d6546;min-height:1.4em;padding:0 4px}
+.fp-copy-wechat:focus-visible,.fp-contact-website:focus-visible{outline:3px solid #60a777;outline-offset:3px}
+.theme-dark .fp-contact{background:linear-gradient(115deg,#213a29,#192920);border-color:#3d6548}
+.theme-dark .fp-contact-copy h2{color:#edf7ee}
+.theme-dark .fp-contact-copy p{color:#bdd0bf}
+.theme-dark .fp-contact-website,.theme-dark .fp-contact-wechat{background:#24382b;border-color:#3a5945;color:#e4f5e8}
+.theme-dark .fp-contact-status{color:#a7d8b1}
+@media(max-width:780px){.fp-contact{grid-template-columns:1fr;gap:26px}}
+@media(max-width:420px){.fp-contact{padding:24px 18px}.fp-contact-wechat{flex-wrap:wrap}.fp-copy-wechat{width:100%;text-align:center}}

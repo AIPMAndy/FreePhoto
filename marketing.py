@@ -36,8 +36,25 @@ DETAILS = """<section class="fp-lower" aria-label="FreePhoto 产品说明">
     <details><summary>为什么图片压缩后反而更大？</summary><p>取决于原图格式、清晰度、尺寸和输出编码方式。可尝试调整画质或选择 WebP；重要图片请保留原件并检查输出效果。</p></details>
     <details><summary>开源协议和项目来源是什么？</summary><p>FreePhoto 基于 MAZANOKE 的 GPL-3.0 代码改造。感谢原作者 civilblur 及依赖项目贡献者。<a href="https://github.com/civilblur/mazanoke" target="_blank" rel="noopener noreferrer">查看上游项目</a>。</p></details>
   </section>
-  <div class="fp-endnote"><strong>FreePhoto.</strong><span>免费使用 · 公开代码 · 不强制注册</span>
-    <div><a href="https://github.com/AIPMAndy/FreePhoto" target="_blank" rel="noopener noreferrer">GitHub 源码 ↗</a><a href="https://metaver.vip/services" target="_blank" rel="noopener noreferrer">作者与 AI 服务 ↗</a></div>
+  <section class="fp-contact" id="contact" aria-labelledby="fp-contact-heading">
+    <div class="fp-contact-copy">
+      <span class="fp-kicker">MADE WITH CARE · AI 酋长 Andy</span>
+      <h2 id="fp-contact-heading">好用的工具，<br>也欢迎一起交流。</h2>
+      <p>FreePhoto 免费开源。如果你正在做 AI 产品、个人 IP 或企业 AI 应用，欢迎从官网了解我，也可以通过微信交流。</p>
+    </div>
+    <div class="fp-contact-actions">
+      <a class="fp-contact-website" href="https://metaver.vip/" target="_blank" rel="noopener noreferrer" aria-label="访问 AI 酋长 Andy 的个人官网">
+        <span><small>PERSONAL WEBSITE</small><strong>metaver.vip</strong></span><span aria-hidden="true">↗</span>
+      </a>
+      <div class="fp-contact-wechat">
+        <div class="fp-contact-wechat-text"><small>WECHAT · 微信</small><strong id="fp-wechat-id">AIPMAndy</strong><span>微信搜索这个 ID 添加</span></div>
+        <button type="button" class="fp-copy-wechat" id="fp-copy-wechat" data-wechat-id="AIPMAndy" aria-describedby="fp-wechat-id">复制微信号</button>
+      </div>
+      <p class="fp-contact-status" id="fp-copy-status" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+  <div class="fp-endnote"><strong>FreePhoto.</strong><span>免费使用 · 公开代码 · 官网 metaver.vip · 微信 AIPMAndy</span>
+    <div><a href="https://github.com/AIPMAndy/FreePhoto" target="_blank" rel="noopener noreferrer">GitHub 源码 ↗</a><a href="https://metaver.vip/" target="_blank" rel="noopener noreferrer">个人官网 ↗</a></div>
   </div>
 </section>"""
 
@@ -62,16 +79,21 @@ def enhance_website(target: Path) -> None:
     source = source.replace('href="./assets/images/favicon-32x32.png"', 'href="./freephoto-mark.svg"')
     source = source.replace('href="./assets/images/favicon-16x16.png"', 'href="./freephoto-mark.svg"')
     source = source.replace('href="./assets/images/apple-touch-icon.png"', 'href="./freephoto-mark.svg"')
+    marker = '<script defer src="./freephoto-i18n.js"></script>'
+    if source.count(marker) != 1:
+        raise RuntimeError("FreePhoto localization script marker missing")
+    source = source.replace(marker, marker + '\n    <script defer src="./freephoto-contact.js"></script>', 1)
     html_file.write_text(source, encoding="utf-8")
     (target / "freephoto-mark.svg").write_text("""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="44" fill="#285d46"/><rect x="35" y="42" width="122" height="108" rx="18" fill="#f1f6ef"/><circle cx="117" cy="75" r="14" fill="#a2c6a6"/><path d="M41 126 76 90 105 120 127 99 151 127v16H41Z" fill="#5a9877"/></svg>""",encoding="utf-8")
     shutil.copy2(Path(__file__).with_name("freephoto-site.css"), target / "freephoto-site.css")
+    shutil.copy2(Path(__file__).with_name("freephoto-contact.js"), target / "freephoto-contact.js")
     service_worker = target / "service-worker.js"
     if service_worker.exists():
         sw=service_worker.read_text(encoding="utf-8")
         marker='"./freephoto-theme.css",'
         if marker not in sw:
             raise RuntimeError("Required PWA asset list entry missing")
-        service_worker.write_text(sw.replace(marker, marker + '\n  "./freephoto-site.css",', 1),encoding="utf-8")
+        service_worker.write_text(sw.replace(marker, marker + '\n  "./freephoto-site.css",\n  "./freephoto-contact.js",', 1),encoding="utf-8")
     (target / "robots.txt").write_text("User-agent: *\nAllow: /\n",encoding="utf-8")
     (target / ".nojekyll").write_text("",encoding="utf-8")
     manifest_path=target/"manifest.json"
