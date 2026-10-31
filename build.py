@@ -29,8 +29,8 @@ def patch_site(target: Path) -> None:
     if 'MAZANOKE' not in html or 'browser-image-compression.js' not in html:
         raise RuntimeError('Upstream structure changed: review fork patch before continuing.')
     html = html.replace('lang="en"','lang="zh-CN"',1)
-    html = html.replace('MAZANOKE | Online Image Optimizer That Runs Privately in Your Browser', 'FreePhoto｜免费、本地、开源的图片工具箱')
-    html = html.replace('Optimize images locally and privately by converting and compressing them offline in your browser. Supports JPG, PNG, WebP, HEIC, AVIF, GIF, SVG.', '免费压缩、调整图片尺寸、转换格式、清理照片元数据。图片在浏览器本地处理，不上传服务器。')
+    html = html.replace('MAZANOKE | Online Image Optimizer That Runs Privately in Your Browser', 'FreePhoto｜免费在线图片压缩、格式转换、调整尺寸 · 本地处理不上传')
+    html = html.replace('Optimize images locally and privately by converting and compressing them offline in your browser. Supports JPG, PNG, WebP, HEIC, AVIF, GIF, SVG.', 'FreePhoto 是免费开源的在线图片工具箱：图片压缩、调整尺寸、JPG / PNG / WebP 格式转换、HEIC 转 JPG，重新编码通常会清除 EXIF 定位信息。图片在浏览器本地处理，不上传服务器，无水印、免注册。')
     html = html.replace('<meta name="robots" content="noindex, nofollow" />', '<meta name="robots" content="index, follow" />')
     html = html.replace('localStorage.getItem("theme") || "theme-dark"', 'localStorage.getItem("theme") || "theme-light"')
     html = html.replace('<h1 class="logo-text">MAZANOKE</h1>', '<h1 class="logo-text">FreePhoto<span class="freephoto-dot">.</span></h1>')

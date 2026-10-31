@@ -71,14 +71,30 @@ def enhance_website(target: Path) -> None:
     if source.count(target_marker) != 1:
         raise RuntimeError("Missing FreePhoto theme marker")
     source = source.replace(target_marker, target_marker + '\n    <link rel="stylesheet" href="./freephoto-site.css" />', 1)
-    source = source.replace('</head>', '''<meta property="og:type" content="website" />
+    source = source.replace('</head>', '''<link rel="canonical" href="https://aipmandy.github.io/FreePhoto/" />
+    <meta name="keywords" content="免费图片压缩,在线图片压缩,图片格式转换,WebP转换,HEIC转JPG,调整图片尺寸,批量压缩图片,去除EXIF,本地图片处理,FreePhoto" />
+    <meta name="author" content="AI 酋长 Andy" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="FreePhoto" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:url" content="https://aipmandy.github.io/FreePhoto/" />
     <meta property="og:title" content="FreePhoto — 免费本地图片工具箱" />
     <meta property="og:description" content="免费图片压缩、转换格式、调整尺寸，图片在浏览器本地处理。开源、无水印、免登录。" />
-    <meta name="theme-color" content="#f7f8f3" />
+    <meta property="og:image" content="https://aipmandy.github.io/FreePhoto/freephoto-og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="FreePhoto 免费在线图片压缩工具首页" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="FreePhoto — 免费在线图片压缩、格式转换" />
+    <meta name="twitter:description" content="免费图片压缩、转换格式、调整尺寸，图片在浏览器本地处理。开源、无水印、免登录。" />
+    <meta name="twitter:image" content="https://aipmandy.github.io/FreePhoto/freephoto-og.png" />
+    <meta name="twitter:creator" content="@AIPMAndy" />
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": ["WebApplication", "SoftwareApplication"], "name": "FreePhoto", "url": "https://aipmandy.github.io/FreePhoto/", "image": "https://aipmandy.github.io/FreePhoto/freephoto-og.png", "description": "免费、本地、开源的图片工具箱：图片压缩、调整尺寸、格式转换与 EXIF 清理，图片在浏览器本地处理。", "applicationCategory": "MultimediaApplication", "operatingSystem": "Web", "inLanguage": "zh-CN", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}, "license": "https://www.gnu.org/licenses/gpl-3.0.html", "isBasedOn": "https://github.com/civilblur/mazanoke", "sameAs": ["https://github.com/AIPMAndy/FreePhoto"], "author": {"@type": "Person", "name": "AI 酋长 Andy", "alternateName": "AIPMAndy", "url": "https://github.com/AIPMAndy", "sameAs": ["https://x.com/AIPMAndy", "https://metaver.vip/"]}}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "图片会发送到服务器吗？", "acceptedAnswer": {"@type": "Answer", "text": "产品图像处理逻辑运行在浏览器本地，不设文件上传接口。页面及依赖代码首次加载仍会通过网络传输；请在可信的部署来源使用。"}}, {"@type": "Question", "name": "支持哪些图片格式？", "acceptedAnswer": {"@type": "Answer", "text": "常见 JPG、PNG、WebP 图片可以直接处理。支持部分 HEIC、AVIF、GIF、SVG、TIFF 等图片输入，实际以浏览器和设备能力为准；部分动画只处理静态帧。"}}, {"@type": "Question", "name": "为什么图片压缩后反而更大？", "acceptedAnswer": {"@type": "Answer", "text": "取决于原图格式、清晰度、尺寸和输出编码方式。可尝试调整画质或选择 WebP；重要图片请保留原件并检查输出效果。"}}, {"@type": "Question", "name": "开源协议和项目来源是什么？", "acceptedAnswer": {"@type": "Answer", "text": "FreePhoto 基于 MAZANOKE 的 GPL-3.0 代码改造。感谢原作者 civilblur 及依赖项目贡献者。查看上游项目。"}}]}</script>
   </head>''', 1)
     source = source.replace('href="./assets/images/favicon-32x32.png"', 'href="./freephoto-mark.svg"')
     source = source.replace('href="./assets/images/favicon-16x16.png"', 'href="./freephoto-mark.svg"')
-    source = source.replace('href="./assets/images/apple-touch-icon.png"', 'href="./freephoto-mark.svg"')
+    source = source.replace('href="./assets/images/apple-touch-icon.png"', 'href="./freephoto-apple-touch-icon.png"')
     marker = '<script defer src="./freephoto-i18n.js"></script>'
     if source.count(marker) != 1:
         raise RuntimeError("FreePhoto localization script marker missing")
@@ -94,7 +110,10 @@ def enhance_website(target: Path) -> None:
         if marker not in sw:
             raise RuntimeError("Required PWA asset list entry missing")
         service_worker.write_text(sw.replace(marker, marker + '\n  "./freephoto-site.css",\n  "./freephoto-contact.js",', 1),encoding="utf-8")
-    (target / "robots.txt").write_text("User-agent: *\nAllow: /\n",encoding="utf-8")
+    (target / "robots.txt").write_text("User-agent: *\nAllow: /\nSitemap: https://aipmandy.github.io/FreePhoto/sitemap.xml\n",encoding="utf-8")
+    (target / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n<url><loc>https://aipmandy.github.io/FreePhoto/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>\n</urlset>\n',encoding="utf-8")
+    for asset in ("freephoto-og.png", "freephoto-apple-touch-icon.png"):
+        shutil.copy2(Path(__file__).with_name(asset), target / asset)
     (target / ".nojekyll").write_text("",encoding="utf-8")
     manifest_path=target/"manifest.json"
     info=json.loads(manifest_path.read_text(encoding="utf-8"))
