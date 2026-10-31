@@ -32,7 +32,7 @@ class WebsiteTests(unittest.TestCase):
         import json
         with tempfile.TemporaryDirectory() as temp:
             root=Path(temp)
-            (root/"index.html").write_text('<html><head><link rel="stylesheet" href="./freephoto-theme.css" /></head><body>    <div class="content">upstream tool</div>    <footer>original</footer></body></html>',encoding="utf-8")
+            (root/"index.html").write_text('<html><head><link rel="stylesheet" href="./freephoto-theme.css" /></head><body>    <div class="content">upstream tool</div>    <footer>original</footer><script defer src="./freephoto-i18n.js"></script></body></html>',encoding="utf-8")
             (root/"manifest.json").write_text(json.dumps({"icons":[]}),encoding="utf-8")
             (root/"service-worker.js").write_text('const urlsToCache = ["./freephoto-theme.css",];',encoding="utf-8")
             enhance_website(root)
